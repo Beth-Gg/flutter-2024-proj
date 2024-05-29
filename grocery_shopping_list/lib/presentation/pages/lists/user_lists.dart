@@ -10,11 +10,14 @@ import './list_dialogbox.dart';
 import 'package:go_router/go_router.dart';
 import '../../../providers/login_provider.dart';
 
+final bottomNavIndexProvider = StateProvider((ref) => 0);
+
 class UserListPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final currnetIndex = ref.watch(bottomNavIndexProvider);
     final auth = ref.watch(authoProvider);
-    
+
     // final shops = ref.watch(shopsProvider);
     final shopsNotifier = ref.watch(listsProvider.notifier);
     final asyncShops = ref.watch(fetchListsProvider);
@@ -109,20 +112,36 @@ class UserListPage extends ConsumerWidget {
         error: (error, stackTrace) =>
             Center(child: Text('Failed to load shops')),
       ),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   currentIndex: 0,
-      //   onTap: _onItemTapped,
-      //   items: [
-      //     BottomNavigationBarItem(
-      //       label: 'Shopping Lists',
-      //       icon: (Icon(Icons.trolley)),
-      //     ),
-      //     BottomNavigationBarItem(
-      //       label: 'Shops',
-      //       icon: (Icon(Icons.shopify)),
-      //     )
-      //   ],
-      // ),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: currnetIndex,
+        destinations: [
+          NavigationDestination(
+            icon: Icon(
+              Icons.shop,
+              color: currnetIndex == 0 ? Colors.purple : Colors.grey,
+            ),
+            label: 'Shop Page',
+          ),
+          NavigationDestination(
+            icon: Icon(
+              Icons.list,
+              color: currnetIndex == 1 ? Colors.purple : Colors.grey,
+            ),
+            label: 'List Page',
+          ),
+        ],
+        onDestinationSelected: (value) {
+          ref.read(bottomNavIndexProvider.notifier).state = value;
+          switch (value) {
+            case 0:
+              GoRouter.of(context).go('/');
+              break;
+            case 1:
+              GoRouter.of(context).go('/userShops');
+              break;
+          }
+        },
+      ),
     );
   }
 }

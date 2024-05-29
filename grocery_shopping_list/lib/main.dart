@@ -7,7 +7,6 @@ import 'presentation/pages/shops/admin_shops_page.dart';
 import 'package:go_router/go_router.dart';
 import './presentation/pages/lists/user_lists.dart';
 
-
 void main() {
   runApp(
     const ProviderScope(
@@ -34,7 +33,6 @@ final GoRouter _router = GoRouter(
     GoRoute(
       path: '/userShops',
       builder: (context, state) => UserListPage(),
-    
     ),
     GoRoute(
       path: '/userLists',
@@ -46,12 +44,10 @@ final GoRouter _router = GoRouter(
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: _router,
-      
     );
   }
 }

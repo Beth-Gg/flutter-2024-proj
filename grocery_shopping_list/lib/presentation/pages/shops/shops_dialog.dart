@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../models/shops_model.dart';
 import '../../../providers/shops_providers.dart';
 
+
 class EditShopDialog extends StatefulWidget {
   final Shop? shop;
   final Function(String, String) onEdit;

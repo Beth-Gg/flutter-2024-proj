@@ -8,9 +8,12 @@ import 'package:go_router/go_router.dart';
 import '../../../main.dart';
 import '../../../providers/login_provider.dart';
 
+final bottomNavIndexProvider = StateProvider((ref) => 0);
+
 class UserShopPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final currnetIndex = ref.watch(bottomNavIndexProvider);
     final auth = ref.watch(authoProvider);
     final shops = ref.watch(shopsProvider);
     final shopsNotifier = ref.watch(shopsProvider.notifier);
@@ -54,6 +57,36 @@ class UserShopPage extends ConsumerWidget {
         loading: () => Center(child: CircularProgressIndicator()),
         error: (error, stackTrace) =>
             Center(child: Text('Failed to load shops')),
+      ),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: currnetIndex,
+        destinations: [
+          NavigationDestination(
+            icon: Icon(
+              Icons.shop,
+              color: currnetIndex == 0 ? Colors.purple : Colors.grey,
+            ),
+            label: 'Shop Page',
+          ),
+          NavigationDestination(
+            icon: Icon(
+              Icons.list,
+              color: currnetIndex == 1 ? Colors.purple : Colors.grey,
+            ),
+            label: 'List Page',
+          ),
+        ],
+        onDestinationSelected: (value) {
+          ref.read(bottomNavIndexProvider.notifier).state = value;
+          switch (value) {
+            case 0:
+              GoRouter.of(context).go('/');
+              break;
+            case 1:
+              GoRouter.of(context).go('/userShops');
+              break;
+          }
+        },
       ),
     );
   }
