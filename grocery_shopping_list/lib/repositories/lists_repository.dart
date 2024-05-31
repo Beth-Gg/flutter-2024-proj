@@ -6,6 +6,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 const String baseUrl = 'http://localhost:6036/user';
 
 class ListRepository {
+  final http.Client client;
+
+  ListRepository({http.Client? client}) : client = client ?? http.Client();
   Future<String?> _getToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('access_token');

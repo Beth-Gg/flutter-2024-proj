@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 const String baseUrl = 'http://localhost:6036/shop';
 
 class ShopRepository {
-Future<String?> _getToken() async {
+  Future<String?> _getToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('access_token');
   }
@@ -27,10 +27,10 @@ Future<String?> _getToken() async {
     final token = await _getToken();
     final response = await http.post(
       Uri.parse('$baseUrl/create'),
-      headers: {'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token'
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
       },
-      
       body: json.encode({'name': name, 'items': items}),
     );
     if (response.statusCode == 201) {
@@ -44,8 +44,9 @@ Future<String?> _getToken() async {
     final token = await _getToken();
     final response = await http.put(
       Uri.parse('$baseUrl/$id'),
-      headers: {'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token'
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
       },
       body: json.encode({'name': name, 'items': items}),
     );
@@ -56,10 +57,12 @@ Future<String?> _getToken() async {
 
   Future<void> deleteShop(String id) async {
     final token = await _getToken();
-    final response = await http.delete(Uri.parse('$baseUrl/$id'),
-    headers: { 'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token'
-    },
+    final response = await http.delete(
+      Uri.parse('$baseUrl/$id'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      },
     );
     if (response.statusCode != 204) {
       throw Exception('Failed to delete shop');
