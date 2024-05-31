@@ -7,3 +7,5 @@ class User {
 
   User(this.username, this.location, this.items);
 }
+
+

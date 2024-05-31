@@ -1,15 +1,15 @@
+// user_dialog.dart
 import 'package:flutter/material.dart';
-import '../admin/models/user.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'user.dart';
+import 'userBloc.dart';
+import 'userEvent.dart';
 
 class AddUserDialog extends StatefulWidget {
-  final Function(User) addUser;
-  final Function(int, User) editUser; // Function to edit user
   final User? user; // User data to pre-fill if editing
   final int? index; // Index of the user being edited, if applicable
 
   AddUserDialog({
-    required this.addUser,
-    required this.editUser,
     this.user,
     this.index,
   });
@@ -109,11 +109,11 @@ class _AddUserDialogState extends State<AddUserDialog> {
                   items,
                 );
                 if (widget.user != null && widget.index != null) {
-                  // If editing existing user, call editUser function
-                  widget.editUser(widget.index!, user);
+                  // If editing existing user, add EditUser event
+                  BlocProvider.of<UserBloc>(context).add(EditUser(widget.index!, user));
                 } else {
-                  // If adding new user, call addUser function
-                  widget.addUser(user);
+                  // If adding new user, add AddUser event
+                  BlocProvider.of<UserBloc>(context).add(AddUser(user));
                 }
                 Navigator.of(context).pop();
               },
@@ -148,3 +148,6 @@ class _AddUserDialogState extends State<AddUserDialog> {
     );
   }
 }
+
+
+
