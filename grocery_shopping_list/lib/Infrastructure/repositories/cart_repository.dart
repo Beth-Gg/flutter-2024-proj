@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '/Infrastructure/models/list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import './auth_repo_impl.dart';
 
 const String baseUrl = 'http://localhost:6036/user';
 
@@ -49,7 +50,8 @@ class ListRepository {
       );
 
       if (response.statusCode == 201) {
-        return json.decode(response.body)['id'];
+        // return json.decode(response.body)['id'];
+        return ('notnull');
       } else {
         throw Exception('Failed to add list: ${response.statusCode}');
       }

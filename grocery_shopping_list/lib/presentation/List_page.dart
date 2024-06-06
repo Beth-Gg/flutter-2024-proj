@@ -36,7 +36,8 @@ class GroceryListWidget extends StatelessWidget {
               itemCount: state.lists.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(state.lists[index].content),
+                  title: Text(state.lists[index].date),
+                  subtitle: Text(state.lists[index].content),
                 );
               },
             );
@@ -106,8 +107,8 @@ class GroceryListWidget extends StatelessWidget {
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   bloc.add(AddAddListEvent(
-                    date: DateTime.now().toString(),
-                    content: '${titleController.text}: ${itemController.text}',
+                    date: titleController.text,
+                    content: itemController.text,
                   ));
                   Navigator.pop(context);
                 }
